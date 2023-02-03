@@ -36,13 +36,13 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="bg-black text-white">
+  <body>
     <main class="flex flex-col items-center justify-center w-screen">
       <div class="fixed flex justify-center items-center h-screen" id="loading">
         <img src="/rings.svg" class="w-48" />
       </div>
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 h-screen w-full p-4"
+        class="grid grid-cols-1 gap-3 lg:space-y-0 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 h-screen w-full p-4"
         id="grid"
       ></div>
     </main>
@@ -67,7 +67,7 @@
 
               let odometer = document.createElement("span");
               odometer.classList =
-                "odometer ml-1 text-2xl font-['Roboto'] leading-[1.05em]";
+                "odometer ml-1 text-5xl xl:text-4xl xxl:text-3xl font-['Roboto'] leading-[1.05em]";
               new Odometer({
                 el: odometer,
                 value: e.score,
@@ -79,7 +79,7 @@
               // twitter emojis
               twemoji.parse(element);
               element.querySelectorAll("img").forEach((elem) => {
-                elem.width = "20";
+                elem.width = "35";
               });
 
               document.getElementById("grid").appendChild(element);
