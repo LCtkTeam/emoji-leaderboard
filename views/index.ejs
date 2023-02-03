@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Twitter Emoji Leaderboard</title>
+    <meta name="title" content="Twitter Emoji Leaderboard" />
+    <meta
+      name="description"
+      content="The top 50 most used emojis on Twitter. Updates every 2 seconds."
+    />
+    <meta property="twitter:title" content="Twitter Emoji Leaderboard" />
+    <meta property="og:type" content="website" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="og:description"
+      content="The top 50 most used emojis on Twitter. Updates every 2 seconds."
+    />
+    <link rel="stylesheet" href="/odometer.css" />
+    <script src="/odometer.js"></script>
+    <link rel="stylesheet" href="/tailwind.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://em-content.zobj.net/thumbs/240/twitter/322/fire_1f525.png"
+      type="image/x-icon"
+    />
+    <script
+      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-black text-white">
+    <main class="flex flex-col items-center justify-center w-screen">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 h-screen w-full p-4"
+        id="grid"
+      ></div>
+    </main>
+  </body>
+  <script>
+    setInterval(() => {
+      fetch("/api/rankings")
+        .then((res) => res.json())
+        .then((emojis) => {
+          emojis.forEach((e, index) => {
+            const emojiOnDocument = document.getElementById(`emoji_${index}`);
+            if (emojiOnDocument)
+              emojiOnDocument.querySelector(".odometer").innerHTML = e.score;
+            else {
+              let element = document.createElement("div");
+              element.id = `emoji_${index}`;
+              element.classList = "flex items-center";
+
+              const emoji = document
+                .createElement("p")
+                .appendChild(document.createTextNode(e.char));
+
+              let odometer = document.createElement("span");
+              odometer.classList =
+                "odometer ml-1 text-2xl font-['Roboto'] leading-[1.05em]";
+              new Odometer({
+                el: odometer,
+                value: e.score,
+              });
+
+              element.appendChild(emoji);
+              element.appendChild(odometer);
+
+              // twitter emojis
+              twemoji.parse(element);
+              element.querySelectorAll("img").forEach((elem) => {
+                elem.width = "20";
+              });
+
+              document.getElementById("grid").appendChild(element);
+            }
+          });
+        });
+    }, 2000);
+  </script>
+</html>

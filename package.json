@@ -1,0 +1,25 @@
+{
+  "name": "emoji-leaderboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "build": "tailwindcss -i ./public/base.css -o ./public/tailwind.css",
+    "watch": "tailwindcss -i ./public/base.css -o ./public/tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "Toastify (https://toastify.tk)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.1",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "tailwindcss": "^3.2.4"
+  }
+}
