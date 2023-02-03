@@ -38,6 +38,9 @@
   </head>
   <body class="bg-black text-white">
     <main class="flex flex-col items-center justify-center w-screen">
+      <div class="fixed flex justify-center items-center h-screen" id="loading">
+        <img src="/rings.svg" class="w-48" />
+      </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 h-screen w-full p-4"
         id="grid"
@@ -48,7 +51,7 @@
     setInterval(() => {
       fetch("/api/rankings")
         .then((res) => res.json())
-        .then((emojis) => {
+        .then(async (emojis) => {
           emojis.forEach((e, index) => {
             const emojiOnDocument = document.getElementById(`emoji_${index}`);
             if (emojiOnDocument)
@@ -82,7 +85,11 @@
               document.getElementById("grid").appendChild(element);
             }
           });
-        });
+          return Promise.resolve("done");
+        })
+        .then(
+          () => (document.getElementById("loading").style.display = "none")
+        );
     }, 2000);
   </script>
 </html>
